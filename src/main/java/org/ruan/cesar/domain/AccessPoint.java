@@ -1,13 +1,14 @@
 package org.ruan.cesar.domain;
 
+import lombok.Getter;
 import org.ruan.cesar.domain.enums.Status;
-import org.ruan.cesar.aplication.exceptions.AccessPointOfflineException;
 
+@Getter
 public class AccessPoint {
 
-    private Status status;
+    private final Status status;
     private final String macAddress;
-    private String apName;
+    private final String apName;
     private String firmwareVersion;
 
     public AccessPoint(Status status, String macAddress, String apName, String firmwareVersion) {
@@ -19,13 +20,6 @@ public class AccessPoint {
 
     public void upgradeFirmwareVersion(String firmwareVersion) {
             this.firmwareVersion = firmwareVersion;
-    }
-
-    public String getMacAddress() {
-        return macAddress;
-    }
-    public Status getStatus(){
-        return status;
     }
 
 
