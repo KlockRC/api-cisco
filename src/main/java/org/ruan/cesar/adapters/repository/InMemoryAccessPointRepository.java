@@ -1,13 +1,13 @@
-package org.ruan.cesar.adapters;
+package org.ruan.cesar.adapters.repository;
 
-import jakarta.enterprise.context.ApplicationScoped;
+//import jakarta.enterprise.context.ApplicationScoped;
 import org.ruan.cesar.aplication.AccessPointRepository;
 import org.ruan.cesar.domain.AccessPoint;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class InMemoryAccessPointRepository implements AccessPointRepository {
 
     private final Map<String, AccessPoint> database = new HashMap<>();
