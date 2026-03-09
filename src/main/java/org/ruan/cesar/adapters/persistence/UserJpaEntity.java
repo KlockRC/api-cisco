@@ -20,6 +20,6 @@ public class UserJpaEntity {
     @Id
     @Column(name = "username")
     private String user;
-    private byte[] password;
+    private String password;
 
 }

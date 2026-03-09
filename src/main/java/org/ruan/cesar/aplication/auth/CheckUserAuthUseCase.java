@@ -15,8 +15,7 @@ public class CheckUserAuthUseCase {
         this.repository = repository;
     }
 
-    public Boolean checkUser(String username, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        var hashPassword = this.repository.hashPassword(password);
-        return this.repository.checkUser(username, hashPassword);
+    public Boolean checkUser(String username, String password) throws NoSuchAlgorithmException {
+        return this.repository.checkUser(username, password);
     }
 }

@@ -1,5 +1,6 @@
 package org.ruan.cesar.adapters;
 
+import io.quarkus.security.Authenticated;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.ruan.cesar.adapters.dto.AccessPointResponse;
@@ -9,7 +10,7 @@ import org.ruan.cesar.aplication.NewAccessPointUseCase;
 import org.ruan.cesar.aplication.UpdateFirmwareUseCase;
 import org.ruan.cesar.domain.enums.Status;
 
-
+@Authenticated
 @Path("/access-point")
 public class AccessPointController {
     private final UpdateFirmwareUseCase updateFirmwareUseCase;

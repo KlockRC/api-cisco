@@ -8,6 +8,7 @@ import org.ruan.cesar.adapters.persistence.UserJpaEntity;
 import org.ruan.cesar.aplication.AuthRepository;
 import org.ruan.cesar.domain.User;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
@@ -16,26 +17,28 @@ import java.util.Arrays;
 public class PostgresAuthRepository implements AuthRepository {
 
     private final EntityManager entityManager;
+    private final HashService hashService;
 
-    public PostgresAuthRepository(EntityManager entityManager){
+    public PostgresAuthRepository(EntityManager entityManager, HashService hashService){
+        this.hashService = hashService;
         this.entityManager = entityManager;
     }
 
     @Override
-    public byte[] hashPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        return HashService.hash(password);
+    public String hashPassword(String password) throws NoSuchAlgorithmException {
+        return hashService.hash(password);
     }
 
-    public Boolean checkUser(String username, byte[] hashedPassword) {
+    public Boolean checkUser(String username, String password) throws NoSuchAlgorithmException {
         var user = entityManager.find(UserJpaEntity.class, username);
-        if (Arrays.equals(user.getPassword(), hashedPassword) && user.getUser().equals(username)) return true;
-        else return false;
+        if (user == null) return false;
+        return hashService.compareHash(password, user.getPassword());
     }
 
     @Transactional
     @Override
     public void saveUser(User user) {
-        if (user.getUsername().isBlank() || Arrays.toString(user.getPassword()).isBlank()) return; // criar um erro;
+        if (user.getUsername().isBlank() || user.getPassword().isBlank()) return;
         var userJpa = new UserJpaEntity(user.getRole(), user.getUsername(), user.getPassword());
         entityManager.persist(userJpa);
     }

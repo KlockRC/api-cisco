@@ -8,9 +8,9 @@ public class User {
 
     private Roles role;
     private final String username;
-    private byte[] password;
+    private String password;
 
-    public User(Roles role,String username, byte[] password) {
+    public User(Roles role,String username, String password) {
         this.role = role;
         this.username = username;
         this.password = password;
