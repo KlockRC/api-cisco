@@ -1,7 +1,7 @@
 package org.ruan.cesar.adapters.auth;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -10,7 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 
-@Singleton
+@ApplicationScoped
 public class HashService {
 
     @Inject

@@ -1,22 +1,23 @@
 package org.ruan.cesar.adapters.persistence;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import org.ruan.cesar.domain.enums.Status;
 import static jakarta.persistence.EnumType.STRING;
 
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "access_point")
 public class AccessPointJpaEntity {
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserJpaEntity userId;
     @Enumerated(STRING)
     private Status status;
     @Id

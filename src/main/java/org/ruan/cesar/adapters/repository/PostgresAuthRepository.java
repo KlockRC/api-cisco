@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.ruan.cesar.adapters.auth.HashService;
+import org.ruan.cesar.adapters.mapper.UserMapper;
 import org.ruan.cesar.adapters.persistence.UserJpaEntity;
 import org.ruan.cesar.aplication.AuthRepository;
 import org.ruan.cesar.domain.User;
@@ -30,16 +31,29 @@ public class PostgresAuthRepository implements AuthRepository {
     }
 
     public Boolean checkUser(String username, String password) throws NoSuchAlgorithmException {
-        var user = entityManager.find(UserJpaEntity.class, username);
+        var user = entityManager.createQuery("SELECT u FROM UserJpaEntity u WHERE u.user = :nome", UserJpaEntity.class)
+                .setParameter("nome", username)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
         if (user == null) return false;
         return hashService.compareHash(password, user.getPassword());
+    }
+
+    public User findByUsername(String username) {
+        var user = entityManager.createQuery("SELECT u FROM UserJpaEntity u WHERE u.user = :nome", UserJpaEntity.class)
+                .setParameter("nome", username)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+        if (user == null) return null;
+        return UserMapper.toDomain(user);
     }
 
     @Transactional
     @Override
     public void saveUser(User user) {
         if (user.getUsername().isBlank() || user.getPassword().isBlank()) return;
-        var userJpa = new UserJpaEntity(user.getRole(), user.getUsername(), user.getPassword());
-        entityManager.persist(userJpa);
+        entityManager.persist(UserMapper.toEntity(user));
     }
 }

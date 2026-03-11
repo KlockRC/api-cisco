@@ -13,8 +13,8 @@ public class GetAccessPointUseCase {
         this.repository = repository;
     }
 
-    public AccessPoint getAccessPoint(String macAddress) {
-        var accessPoint = this.repository.findAccessPoint(macAddress);
+    public AccessPoint getAccessPoint(String macAddress, Long userId) {
+        var accessPoint = this.repository.findAccessPoint(macAddress, userId);
         if (accessPoint == null) throw new AccessPointNotFoundException();
         return accessPoint;
     }

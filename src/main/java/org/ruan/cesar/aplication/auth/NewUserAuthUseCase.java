@@ -20,7 +20,7 @@ public class NewUserAuthUseCase {
 
     public void newUser(String username, String password, String role) throws InvalidKeySpecException, UnsupportedEncodingException, NoSuchAlgorithmException {
         var hashPassword = this.repository.hashPassword(password);
-        var user = new User(Roles.valueOf(role), username, hashPassword);
+        var user = new User(null ,Roles.valueOf(role), username, hashPassword);
         this.repository.saveUser(user);
     }
 }

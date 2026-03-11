@@ -14,8 +14,8 @@ public class UpdateFirmwareUseCase {
         this.repository =  repository;
     }
 
-    public void updateFirmware(String macAddress, String newVersion) {
-        var accessPoint = this.repository.findAccessPoint(macAddress);
+    public void updateFirmware(Long userId,String macAddress, String newVersion) {
+        var accessPoint = this.repository.findAccessPoint(macAddress, userId);
         if (accessPoint == null) throw new AccessPointNotFoundException();
         if (accessPoint.getStatus() != Status.Online) throw new AccessPointOfflineException();
         accessPoint.upgradeFirmwareVersion(newVersion);

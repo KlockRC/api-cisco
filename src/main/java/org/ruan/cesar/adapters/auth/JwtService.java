@@ -9,8 +9,8 @@ import java.util.Set;
 @ApplicationScoped
 public class JwtService {
 
-    public String generateToken(String username, Set<String> role){
-        return Jwt.issuer("api-cisco").upn(username).groups(role).expiresIn(Duration.ofDays(1)).sign();
+    public String generateToken(Long userId, Set<String> role){
+        return Jwt.issuer("api-cisco").upn(userId.toString()).groups(role).expiresIn(Duration.ofDays(1)).sign();
     }
 
 }

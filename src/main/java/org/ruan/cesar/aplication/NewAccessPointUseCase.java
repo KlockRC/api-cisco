@@ -13,8 +13,8 @@ public class NewAccessPointUseCase {
         this.repository = repository;
     }
 
-    public void newAccessPoint (Status status, String macAddress, String apName, String firmwareVersion) {
-        var accessPoint = new AccessPoint(status, macAddress, apName, firmwareVersion);
+    public void newAccessPoint (Long userId,Status status, String macAddress, String apName, String firmwareVersion) {
+        var accessPoint = new AccessPoint(userId,status, macAddress, apName, firmwareVersion);
         this.repository.saveAccessPoint(accessPoint);
     }
 }
